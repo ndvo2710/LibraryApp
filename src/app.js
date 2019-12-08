@@ -14,10 +14,7 @@ document.querySelector(UISelectors.backBtn).addEventListener('click', back);
 function addBook(e) {
   console.log("Clicking Add Button");
   const [bookName, bookAuthor, bookPages, bookStatus] = uictrl.getInput();
-  if (bookName === "" || bookAuthor === "" || bookPages === "") {
-    uictrl.addErrorMessage("Please fill in the blank! Book Name, Author and pages cannot be empty.");
-    uictrl.displayErrorMessage();
-  } else {
+  if (!(bookName === "" || bookAuthor === "" || bookPages === "")) {
     bookCtrl.addBook(bookName, bookAuthor, bookPages, bookStatus);
     console.log("Redering Books:");
     console.log(bookCtrl.books);

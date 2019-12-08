@@ -1,3 +1,4 @@
+import { UI } from "winjs";
 
 export class UISelectors {
     static clearBtn = ".clear-btn";
@@ -12,9 +13,15 @@ export class UISelectors {
     static pageInput = "#book-page";
     static statusCheckbox = "#book-status";
     static itemListUl = "#item-list";
+    static inputContainer = ".input-container";
+    static alert = ".alert"
     static errorMessage = ".error-message";
 }
 
+async function delay(ms) {
+    // return await for better async stack trace support in case of errors.
+    return await new Promise(resolve => setTimeout(resolve, ms));
+}
 
 class UICtrl {
 
@@ -35,11 +42,54 @@ class UICtrl {
                     bookInput.push("Not Yet");
                 }
             } else {
+                console.log(inputElement.name);
+                this.validateInput(inputElement);
                 bookInput.push(inputElement.value);
             }
         });
+        this.fadeOutAndRemoveAlert();
         console.log(`Book Input : ${bookInput}`);
         return bookInput;
+    }
+
+    validateInput(inputElement) {
+        if (inputElement.value === "") {
+            const div = document.createElement('div');
+            div.className = "alert";
+            div.style = "color:red"
+            div.appendChild(document.createTextNode(`${inputElement.placeholder} should not be empty. Please fill in the blank`));
+            const container = inputElement.parentElement;
+            container.insertBefore(div, inputElement.nextSibling);
+        }
+    }
+
+
+    fadeOutAndRemoveAlert() {
+        let alerts = document.querySelectorAll(UISelectors.alert); // get required element
+        if (alerts) {
+            alerts.forEach(alert => {
+                alert.style.opacity = 1;
+              
+            });// set opacity for the element to 1
+
+
+            (function () {
+                let alerts = document.querySelectorAll(UISelectors.alert);
+                let i = 0;
+                let timerId = setInterval(function () { // start interval loop
+                    alerts.forEach((alert, index, alertsArray) => {
+                        alertsArray[index].style.opacity = 1 - 0.03 * i
+                    });
+                    if (++i === 100) clearInterval(timerId);
+                }, 100); // run every 0.1 second
+            })();// fadeout
+
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.parentNode.removeChild(alert);
+                }, 5000)
+            }); // remove alert
+        }
     }
 
     renderItemList(books) {
@@ -64,25 +114,6 @@ class UICtrl {
         );
     }
 
-    addErrorMessage(message) {
-        document.querySelector(UISelectors.errorMessage).innerHTML = `<span>Error: ${message}</span>`;
-    }
-
-    displayErrorMessage() {
-        let fade = document.querySelector(UISelectors.errorMessage); // get required element
-        fade.style.opacity = 1; // set opacity for the element to 1
-        setTimeout(function () { // start a delay
-
-            let timerId = setInterval(function () { // start interval loop
-                let opacity = fade.style.opacity; // get current opacity
-                if (opacity == 0) { // check if its 0 yet
-                    clearInterval(timerId); // if so, exit from interval loop
-                } else {
-                    fade.style.opacity = opacity - 0.03; // else remove 0.05 from opacity
-                }
-            }, 100); // run every 0.1 second
-        }, 1000); // wait to run after 5 seconds
-    }
 }
 
 const uictrl = new UICtrl();
