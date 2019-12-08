@@ -12,6 +12,7 @@ export class UISelectors {
     static pageInput = "#book-page";
     static statusCheckbox = "#book-status";
     static itemListUl = "#item-list";
+    static errorMessage = ".error-message";
 }
 
 
@@ -59,8 +60,28 @@ class UICtrl {
                     </a>
                 </li>
                 `
-                }
+        }
         );
+    }
+
+    addErrorMessage(message) {
+        document.querySelector(UISelectors.errorMessage).innerHTML = `<span>Error: ${message}</span>`;
+    }
+
+    displayErrorMessage() {
+        let fade = document.querySelector(UISelectors.errorMessage); // get required element
+        fade.style.opacity = 1; // set opacity for the element to 1
+        setTimeout(function () { // start a delay
+
+            let timerId = setInterval(function () { // start interval loop
+                let opacity = fade.style.opacity; // get current opacity
+                if (opacity == 0) { // check if its 0 yet
+                    clearInterval(timerId); // if so, exit from interval loop
+                } else {
+                    fade.style.opacity = opacity - 0.03; // else remove 0.05 from opacity
+                }
+            }, 100); // run every 0.1 second
+        }, 1000); // wait to run after 5 seconds
     }
 }
 
