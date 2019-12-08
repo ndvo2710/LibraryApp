@@ -1,5 +1,3 @@
-import { UI } from "winjs";
-
 
 export class UISelectors {
     static clearBtn = ".clear-btn";
