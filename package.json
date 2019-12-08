@@ -1,0 +1,36 @@
+{
+  "name": "BookLibrary",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/app.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=development parcel src/index.html --open",
+    "build": "NODE_ENV=production parcel build src/index.html --public-url ./",
+    "test:eslint": "eslint src/ --ext .js",
+    "pretest": "yarn run test:eslint",
+    "precommit": "lint-staged"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-syntax-class-properties": "^7.7.4",
+    "@babel/preset-flow": "^7.7.4",
+    "babel-eslint": "^10.0.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^6.7.2",
+    "flow-bin": "^0.113.0",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^1.19.1"
+  },
+  "lint-staged": {
+    "*.{js,json,scss,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
