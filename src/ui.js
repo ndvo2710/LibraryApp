@@ -21,7 +21,6 @@ export class UISelectors {
 class UICtrl {
 
     clearInput() {
-        console.log("I'm there");
         const InputSelectorsList = [
             UISelectors.nameInput,
             UISelectors.authorInput,
