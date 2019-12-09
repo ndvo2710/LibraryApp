@@ -16,10 +16,14 @@ function addBook(e) {
   const [bookName, bookAuthor, bookPages, bookStatus] = uictrl.getInput();
   if (!(bookName === "" || bookAuthor === "" || bookPages === "")) {
     bookCtrl.addBook(bookName, bookAuthor, bookPages, bookStatus);
-    console.log("Redering Books:");
-    console.log(bookCtrl.books);
     uictrl.renderItemList(bookCtrl.books);
   }
+  e.preventDefault();
+}
+
+function back(e) {
+  console.log("Clicking back button");
+  uictrl.clearInput();
   e.preventDefault();
 }
 
@@ -29,10 +33,6 @@ function updateBook() {
 
 function deleteBook() {
   // console.log("Clicking delete button");
-}
-
-function back() {
-  // console.log("Clicking back button");
 }
 
 

@@ -20,7 +20,28 @@ export class UISelectors {
 
 class UICtrl {
 
+    clearInput() {
+        console.log("I'm there");
+        const InputSelectorsList = [
+            UISelectors.nameInput,
+            UISelectors.authorInput,
+            UISelectors.pageInput,
+            UISelectors.statusCheckbox
+        ];
+        InputSelectorsList.forEach(inputSelector => {
+            const inputElement = document.querySelector(inputSelector);
+            if (inputElement.type === "checkbox") {
+                if (inputElement.checked) {
+                    inputElement.checked = false;
+                } 
+            } else {
+                inputElement.value = "";
+            }
+        });
+    }
+
     getInput() {
+        console.log("I'm here");
         const InputSelectorsList = [
             UISelectors.nameInput,
             UISelectors.authorInput,
@@ -37,7 +58,6 @@ class UICtrl {
                     bookInput.push("Not Yet");
                 }
             } else {
-                console.log(inputElement.name);
                 this.validateInput(inputElement);
                 bookInput.push(inputElement.value);
             }
@@ -64,7 +84,7 @@ class UICtrl {
         if (alerts) {
             alerts.forEach(alert => {
                 alert.style.opacity = 1;
-              
+
             });// set opacity for the element to 1
 
 
