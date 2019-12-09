@@ -9,7 +9,7 @@ document.querySelector(UISelectors.addBtn).addEventListener('click', addBook);
 document.querySelector(UISelectors.updateBtn).addEventListener('click', updateBook);
 document.querySelector(UISelectors.deleteBtn).addEventListener('click', deleteBook);
 document.querySelector(UISelectors.backBtn).addEventListener('click', back);
-// document.querySelector(UISelectors.editBtn).addEventListener('click', edit);
+document.querySelector(UISelectors.editBtn).addEventListener('click', edit);
 
 
 function addBook(e) {
@@ -29,8 +29,10 @@ function back(e) {
   e.preventDefault();
 }
 
-// function edit(e){
-// }
+function edit(e){
+  console.log(e);
+}
+
 
 function updateBook() {
   // console.log("Clicking update button");
