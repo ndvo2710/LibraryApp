@@ -32,7 +32,10 @@ function back(e) {
 function edit(e){
   console.log(e);
   if (e.target.classList.contains("edit-item")) {
-    console.log("Hello World");
+    const cListId = e.target.parentNode.parentNode.id
+    const cListIdIndex = cListId.split('-')[1];
+    uictrl.renderEditItemToForm(bookCtrl.books[cListIdIndex]);
+    uictrl.enableUpdateAndDeleteButton();
   }
 }
 

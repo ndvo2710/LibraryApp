@@ -127,6 +127,26 @@ class UICtrl {
         );
     }
 
+    renderEditItemToForm(book){
+        document.querySelector(UISelectors.nameInput).value = book.name;
+        document.querySelector(UISelectors.authorInput).value = book.author;
+        document.querySelector(UISelectors.pageInput).value = book.pages;
+        document.querySelector(UISelectors.statusCheckbox).checked = (book.status === "Done");
+    }
+
+    enableUpdateAndDeleteButton(){
+        const disabledBtnSelectors = [
+            UISelectors.updateBtn, 
+            UISelectors.deleteBtn
+        ];
+        disabledBtnSelectors.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element.classList.contains("disabled")) {
+                element.classList.remove("disabled");
+            }
+        });
+    }
+
 }
 
 const uictrl = new UICtrl();
