@@ -41,7 +41,6 @@ class UICtrl {
     }
 
     getInput() {
-        console.log("I'm here");
         const InputSelectorsList = [
             UISelectors.nameInput,
             UISelectors.authorInput,

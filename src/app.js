@@ -9,6 +9,7 @@ document.querySelector(UISelectors.addBtn).addEventListener('click', addBook);
 document.querySelector(UISelectors.updateBtn).addEventListener('click', updateBook);
 document.querySelector(UISelectors.deleteBtn).addEventListener('click', deleteBook);
 document.querySelector(UISelectors.backBtn).addEventListener('click', back);
+// document.querySelector(UISelectors.editBtn).addEventListener('click', edit);
 
 
 function addBook(e) {
@@ -17,6 +18,7 @@ function addBook(e) {
   if (!(bookName === "" || bookAuthor === "" || bookPages === "")) {
     bookCtrl.addBook(bookName, bookAuthor, bookPages, bookStatus);
     uictrl.renderItemList(bookCtrl.books);
+    uictrl.clearInput();
   }
   e.preventDefault();
 }
@@ -26,6 +28,9 @@ function back(e) {
   uictrl.clearInput();
   e.preventDefault();
 }
+
+// function edit(e){
+// }
 
 function updateBook() {
   // console.log("Clicking update button");
