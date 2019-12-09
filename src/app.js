@@ -34,14 +34,24 @@ function edit(e){
   if (e.target.classList.contains("edit-item")) {
     const cListId = e.target.parentNode.parentNode.id
     const cListIdIndex = cListId.split('-')[1];
+    bookCtrl.setCurrentBookbyIndex(cListIdIndex);
     uictrl.renderEditItemToForm(bookCtrl.books[cListIdIndex]);
     uictrl.enableUpdateAndDeleteButton();
   }
 }
 
 
-function updateBook() {
-  // console.log("Clicking update button");
+function updateBook(e) {
+  console.log("Clicking update button");
+  const [bookName, bookAuthor, bookPages, bookStatus] = uictrl.getInput();
+  if (!(bookName === "" || bookAuthor === "" || bookPages === "")) {
+    bookCtrl.updateCurrentBook(bookName, bookAuthor, bookPages, bookStatus);
+    console.log(bookCtrl.books);
+    uictrl.renderItemList(bookCtrl.books);
+    uictrl.clearInput();
+    uictrl.disableUpdateAndDeleteButton();
+  }
+  e.preventDefault();
 }
 
 function deleteBook() {

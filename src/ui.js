@@ -127,14 +127,14 @@ class UICtrl {
         );
     }
 
-    renderEditItemToForm(book){
+    renderEditItemToForm(book) {
         document.querySelector(UISelectors.nameInput).value = book.name;
         document.querySelector(UISelectors.authorInput).value = book.author;
         document.querySelector(UISelectors.pageInput).value = book.pages;
         document.querySelector(UISelectors.statusCheckbox).checked = (book.status === "Done");
     }
 
-    enableUpdateAndDeleteButton(){
+    enableUpdateAndDeleteButton() {
         const disabledBtnSelectors = [
             UISelectors.updateBtn, 
             UISelectors.deleteBtn
@@ -146,6 +146,18 @@ class UICtrl {
             }
         });
     }
+
+    disableUpdateAndDeleteButton() {
+        const enableBtnSelectors = [
+            UISelectors.updateBtn, 
+            UISelectors.deleteBtn
+        ];
+        enableBtnSelectors.forEach(selector => {
+            const element = document.querySelector(selector);
+            element.classList.add("disabled");
+        });
+    }
+
 
 }
 
