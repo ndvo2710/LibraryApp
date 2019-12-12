@@ -17,7 +17,7 @@ class BookCtrl {
         this.books.push(book);
     }
 
-    updateCurrentBook(name, author, pages, status){
+    updateCurrentBook(name, author, pages, status) {
         const book = {
             "id": this.currentBook.id,
             "name": name,
@@ -30,6 +30,18 @@ class BookCtrl {
 
     setCurrentBookbyIndex(index) {
         this.currentBook = this.books[index];
+    }
+
+    getCurrentBook() {
+        return [this.currentBook.name, this.currentBook.author, this.currentBook.pages, this.currentBook.status]
+    }
+
+    deleteCurrentBook(){
+        this.books.splice(this.currentBook.id, 1);
+    }
+
+    deleteAllBook(){
+        this.books = [];
     }
 
 }

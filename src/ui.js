@@ -1,34 +1,50 @@
+import { UI } from "winjs";
 
-export class UISelectors {
-    static clearBtn = ".clear-btn";
-    static addBtn = ".add-btn"
-    static updateBtn = ".update-btn";
-    static deleteBtn = ".delete-btn";
-    static backBtn = ".back-btn";
-    static updateBtn = ".update-btn";
-    static editBtn = ".edit-item";
-    static nameInput = "#book-name";
-    static authorInput = "#book-author";
-    static pageInput = "#book-page";
-    static statusCheckbox = "#book-status";
-    static itemListUl = "#item-list";
-    static inputContainer = ".input-container";
-    static alert = ".alert"
-    static errorMessage = ".error-message";
+
+
+export const UISelectors = {
+    clearBtn : ".clear-btn",
+    addBtn : ".add-btn",
+    updateBtn : ".update-btn",
+    deleteBtn : ".delete-btn",
+    backBtn : ".back-btn",
+    editBtn : ".edit-item",
+    nameInput : "#book-name",
+    authorInput : "#book-author",
+    pageInput : "#book-page",
+    statusCheckbox : "#book-status",
+    itemListUl : "#item-list",
+    inputContainer : ".input-container",
+    alert : ".alert",
+    errorMessage : ".error-message"
 }
 
 
 class UICtrl {
 
+    constructor() {
+        this.clearBtnElem = document.querySelector(UISelectors.clearBtn);
+        this.addBtnElem = document.querySelector(UISelectors.addBtn);
+        this.updateBtnElem = document.querySelector(UISelectors.updateBtn);
+        this.deleteBtnElem = document.querySelector(UISelectors.deleteBtn);
+        this.backBtnElem = document.querySelector(UISelectors.backBtn);
+        // this.editBtnElem = document.querySelector(UISelectors.editBtn);
+        this.nameInputElem = document.querySelector(UISelectors.nameInput);
+        this.authorInputElem = document.querySelector(UISelectors.authorInput);
+        this.pageInputElem = document.querySelector(UISelectors.pageInput);
+        this.statusCheckboxElem = document.querySelector(UISelectors.statusCheckbox);
+        this.itemListUlElem = document.querySelector(UISelectors.itemListUl);
+        this.inputContainerElem = document.querySelector(UISelectors.inputContainer);
+        this.InputElementsList = [
+            this.nameInputElem,
+            this.authorInputElem,
+            this.pageInputElem,
+            this.statusCheckboxElem
+        ]
+    }
+
     clearInput() {
-        const InputSelectorsList = [
-            UISelectors.nameInput,
-            UISelectors.authorInput,
-            UISelectors.pageInput,
-            UISelectors.statusCheckbox
-        ];
-        InputSelectorsList.forEach(inputSelector => {
-            const inputElement = document.querySelector(inputSelector);
+        this.InputElementsList.forEach(inputElement => {
             if (inputElement.type === "checkbox") {
                 if (inputElement.checked) {
                     inputElement.checked = false;
@@ -40,15 +56,8 @@ class UICtrl {
     }
 
     getInput() {
-        const InputSelectorsList = [
-            UISelectors.nameInput,
-            UISelectors.authorInput,
-            UISelectors.pageInput,
-            UISelectors.statusCheckbox
-        ];
         const bookInput = [];
-        InputSelectorsList.forEach(inputSelector => {
-            const inputElement = document.querySelector(inputSelector);
+        this.InputElementsList.forEach(inputElement => {
             if (inputElement.type === "checkbox") {
                 if (inputElement.checked) {
                     bookInput.push("Done")
@@ -80,36 +89,35 @@ class UICtrl {
     fadeOutAndRemoveAlert() {
         let alerts = document.querySelectorAll(UISelectors.alert); // get required element
         if (alerts) {
-            alerts.forEach(alert => {
-                alert.style.opacity = 1;
 
-            });// set opacity for the element to 1
+            // disable fadeout. Does not work on some browser
+                // alerts.forEach(alert => {
+                //     alert.style.opacity = 1;
 
-
-            (function () {
-                let alerts = document.querySelectorAll(UISelectors.alert);
-                let i = 0;
-                let timerId = setInterval(function () { // start interval loop
-                    alerts.forEach((alert, index, alertsArray) => {
-                        alertsArray[index].style.opacity = 1 - 0.03 * i
-                    });
-                    if (++i === 100) clearInterval(timerId);
-                }, 100); // run every 0.1 second
-            })();// fadeout
+                // });// set opacity for the element to 1
+                // (function () {
+                //     let alerts = document.querySelectorAll(UISelectors.alert);
+                //     let i = 0;
+                //     let timerId = setInterval(function () { // start interval loop
+                //         alerts.forEach((alert, index, alertsArray) => {
+                //             alertsArray[index].style.opacity = 1 - 0.03 * i
+                //         });
+                //         if (++i === 100) clearInterval(timerId);
+                //     }, 100); // run every 0.1 second
+                // })();// fadeout
 
             alerts.forEach(alert => {
                 setTimeout(() => {
                     alert.parentNode.removeChild(alert);
-                }, 5000)
+                }, 3000)
             }); // remove alert
         }
     }
 
     renderItemList(books) {
-        const itemListElement = document.querySelector(UISelectors.itemListUl);
-        itemListElement.innerHTML = "";
+        this.itemListUlElem.innerHTML = "";
         books.forEach((book, id) => {
-            itemListElement.innerHTML += `
+            this.itemListUlElem.innerHTML += `
                 <li class="collection-item" id="book-${id}">
                     <strong>Book: </strong> <em>${book.name}</em>
                     &emsp;
@@ -128,33 +136,31 @@ class UICtrl {
     }
 
     renderEditItemToForm(book) {
-        document.querySelector(UISelectors.nameInput).value = book.name;
-        document.querySelector(UISelectors.authorInput).value = book.author;
-        document.querySelector(UISelectors.pageInput).value = book.pages;
-        document.querySelector(UISelectors.statusCheckbox).checked = (book.status === "Done");
+        this.nameInputElem.value = book.name;
+        this.authorInputElem.value = book.author;
+        this.pageInputElem.value = book.pages;
+        this.statusCheckboxElem.checked = (book.status === "Done");
     }
 
     enableUpdateAndDeleteButton() {
-        const disabledBtnSelectors = [
-            UISelectors.updateBtn, 
-            UISelectors.deleteBtn
+        const buttons = [
+            this.updateBtnElem,
+            this.deleteBtnElem
         ];
-        disabledBtnSelectors.forEach(selector => {
-            const element = document.querySelector(selector);
-            if (element.classList.contains("disabled")) {
-                element.classList.remove("disabled");
+        buttons.forEach(buttonElem => {
+            if (buttonElem.classList.contains("disabled")) {
+                buttonElem.classList.remove("disabled");
             }
         });
     }
 
     disableUpdateAndDeleteButton() {
-        const enableBtnSelectors = [
-            UISelectors.updateBtn, 
-            UISelectors.deleteBtn
+        const buttons = [
+            this.updateBtnElem,
+            this.deleteBtnElem
         ];
-        enableBtnSelectors.forEach(selector => {
-            const element = document.querySelector(selector);
-            element.classList.add("disabled");
+        buttons.forEach(buttonElem => {
+            buttonElem.classList.add("disabled");
         });
     }
 

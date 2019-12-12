@@ -55,11 +55,21 @@ function updateBook(e) {
 }
 
 function deleteBook() {
-  // console.log("Clicking delete button");
+  console.log("Clicking delete button");
+
+  if (JSON.stringify(uictrl.getInput() === JSON.stringify(bookCtrl.getCurrentBook()))) {
+    bookCtrl.deleteCurrentBook();
+    uictrl.disableUpdateAndDeleteButton();
+  }
+  console.log(bookCtrl.books);
+  uictrl.renderItemList(bookCtrl.books);
+  uictrl.clearInput();
 }
 
 
 function clearAll() {
-  // console.log("Clicking Clearing All Button");
+  console.log("Clicking Clearing All Button");
+  bookCtrl.deleteAllBook();
+  uictrl.renderItemList(bookCtrl.books);
 }
 
